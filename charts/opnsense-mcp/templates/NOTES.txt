@@ -1,0 +1,13 @@
+opnsense-mcp has been deployed in SSE (HTTP) mode.
+
+The MCP server is reachable within the cluster at:
+  http://{{ include "opnsense-mcp.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}
+
+{{- if .Values.ingress.enabled }}
+{{- range .Values.ingress.hosts }}
+External URL: http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}
+{{- end }}
+{{- else }}
+To access the server locally, forward the port:
+  kubectl port-forward svc/{{ include "opnsense-mcp.fullname" . }} {{ .Values.service.port }}:{{ .Values.service.port }} -n {{ .Release.Namespace }}
+{{- end }}

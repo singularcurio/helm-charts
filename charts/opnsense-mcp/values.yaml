@@ -1,0 +1,54 @@
+replicaCount: 1
+
+image:
+  repository: singularcurio/opnsense-mcp
+  pullPolicy: IfNotPresent
+  # Overrides the image tag. Defaults to Chart.appVersion.
+  tag: ""
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: opnsense-mcp.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources: {}
+
+# OPNsense connection credentials.
+# Set host, apiKey, and apiSecret directly, or point to an existing Secret
+# with keys: OPNSENSE_HOST, OPNSENSE_API_KEY, OPNSENSE_API_SECRET.
+opnsense:
+  host: ""
+  apiKey: ""
+  apiSecret: ""
+  verifySSL: true
+  https: true
+  # Name of an existing Secret containing the OPNsense credentials.
+  # When set, host/apiKey/apiSecret above are ignored.
+  existingSecret: ""
+
+# MCP server settings.
+mcp:
+  transport: sse
+  host: "0.0.0.0"
+  port: 8000
+  # Comma-separated list of modules to preload. Leave empty to use defaults.
+  preload: ""
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

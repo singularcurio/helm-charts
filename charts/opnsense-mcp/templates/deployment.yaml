@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "opnsense-mcp.fullname" . }}
+  labels:
+    {{- include "opnsense-mcp.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "opnsense-mcp.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "opnsense-mcp.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "opnsense-mcp.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.mcp.port }}
+              protocol: TCP
+          env:
+            - name: OPNSENSE_MCP_TRANSPORT
+              value: {{ .Values.mcp.transport | quote }}
+            - name: OPNSENSE_MCP_HOST
+              value: {{ .Values.mcp.host | quote }}
+            - name: OPNSENSE_MCP_PORT
+              value: {{ .Values.mcp.port | quote }}
+            {{- if .Values.mcp.preload }}
+            - name: OPNSENSE_MCP_PRELOAD
+              value: {{ .Values.mcp.preload | quote }}
+            {{- end }}
+            - name: OPNSENSE_VERIFY_SSL
+              value: {{ .Values.opnsense.verifySSL | quote }}
+            - name: OPNSENSE_HTTPS
+              value: {{ .Values.opnsense.https | quote }}
+            - name: OPNSENSE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "opnsense-mcp.secretName" . }}
+                  key: OPNSENSE_HOST
+            - name: OPNSENSE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "opnsense-mcp.secretName" . }}
+                  key: OPNSENSE_API_KEY
+            - name: OPNSENSE_API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "opnsense-mcp.secretName" . }}
+                  key: OPNSENSE_API_SECRET
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

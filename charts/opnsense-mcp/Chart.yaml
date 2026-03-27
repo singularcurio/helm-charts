@@ -1,0 +1,16 @@
+apiVersion: v2
+name: opnsense-mcp
+description: MCP server for OPNsense firewall management via REST API
+type: application
+version: 0.1.0
+appVersion: "0.1.1"
+keywords:
+  - opnsense
+  - mcp
+  - firewall
+  - networking
+sources:
+  - https://github.com/singularcurio/opnsense-mcp
+maintainers:
+  - name: singularcurio
+    url: https://github.com/singularcurio
