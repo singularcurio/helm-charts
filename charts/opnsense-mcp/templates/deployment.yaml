@@ -54,14 +54,12 @@ spec:
                   name: {{ include "opnsense-mcp.secretName" . }}
                   key: OPNSENSE_API_SECRET
           livenessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: http
             initialDelaySeconds: 10
             periodSeconds: 30
           readinessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: http
             initialDelaySeconds: 5
             periodSeconds: 10
