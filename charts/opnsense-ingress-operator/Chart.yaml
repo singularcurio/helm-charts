@@ -2,8 +2,8 @@ apiVersion: v2
 name: opnsense-ingress-operator
 description: Kubernetes operator that syncs Ingress hostnames to OPNsense Unbound DNS host overrides
 type: application
-version: 0.1.0
-appVersion: "0.1.0"
+version: 0.1.1
+appVersion: "0.1.1"
 keywords:
   - opnsense
   - unbound
