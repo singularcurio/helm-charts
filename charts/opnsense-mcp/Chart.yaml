@@ -2,7 +2,7 @@ apiVersion: v2
 name: opnsense-mcp
 description: MCP server for OPNsense firewall management via REST API
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: "v0.1.2"
 keywords:
   - opnsense
