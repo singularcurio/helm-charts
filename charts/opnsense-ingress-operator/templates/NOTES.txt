@@ -1,0 +1,21 @@
+opnsense-ingress-operator has been deployed.
+
+The operator watches all Ingress objects cluster-wide and syncs their hostnames
+as Unbound DNS host overrides on your OPNsense router.
+
+Connecting to OPNsense at:
+{{- if .Values.opnsense.existingSecret }}
+  Host pulled from existing Secret: {{ .Values.opnsense.existingSecret }}
+{{- else }}
+  Host: {{ .Values.opnsense.host }}
+{{- end }}
+
+Annotation prefix: {{ .Values.operator.annotationPrefix }}
+
+Per-Ingress annotations:
+  {{ .Values.operator.annotationPrefix }}/target-ip       — override the target IP (e.g. for NodePort)
+  {{ .Values.operator.annotationPrefix }}/domain-split    — number of hostname labels (default: 1)
+  {{ .Values.operator.annotationPrefix }}/host-override-uuids — managed automatically by the operator
+
+To check operator logs:
+  kubectl logs -n {{ .Release.Namespace }} -l app.kubernetes.io/name={{ include "opnsense-ingress-operator.name" . }} -f

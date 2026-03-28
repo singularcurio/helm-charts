@@ -1,0 +1,47 @@
+image:
+  repository: singularcurio/opnsense-ingress-operator
+  pullPolicy: IfNotPresent
+  # Overrides the image tag. Defaults to Chart.appVersion.
+  tag: ""
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+# OPNsense connection credentials.
+# Set host, apiKey, and apiSecret directly, or point to an existing Secret
+# with keys: OPNSENSE_HOST, OPNSENSE_API_KEY, OPNSENSE_API_SECRET.
+opnsense:
+  host: ""
+  apiKey: ""
+  apiSecret: ""
+  verifySSL: false
+  # Name of an existing Secret containing the OPNsense credentials.
+  # When set, host/apiKey/apiSecret above are ignored.
+  existingSecret: ""
+
+# Operator behaviour settings.
+operator:
+  # Default TTL (seconds) applied to created host overrides.
+  defaultTTL: 300
+  # Annotation prefix used on Ingress objects.
+  # opnsense.io/host-override-uuids, opnsense.io/target-ip, opnsense.io/domain-split
+  annotationPrefix: "opnsense.io"
+  # Prefix added to the description field of each Unbound host override.
+  descriptionPrefix: "managed by opnsense-ingress-operator"
+  # How often (seconds) to reconcile OPNsense against live Ingress state to
+  # remove any orphaned overrides left behind by operator downtime.
+  reconcileInterval: 300
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

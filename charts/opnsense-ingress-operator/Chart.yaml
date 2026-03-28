@@ -1,0 +1,18 @@
+apiVersion: v2
+name: opnsense-ingress-operator
+description: Kubernetes operator that syncs Ingress hostnames to OPNsense Unbound DNS host overrides
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+keywords:
+  - opnsense
+  - unbound
+  - dns
+  - ingress
+  - operator
+  - networking
+sources:
+  - https://github.com/singularcurio/opnsense-ingress-operator
+maintainers:
+  - name: singularcurio
+    url: https://github.com/singularcurio
