@@ -3,6 +3,29 @@ entries:
   opnsense-ingress-operator:
   - apiVersion: v2
     appVersion: v0.1.2
+    created: "2026-03-28T05:27:05.278822623Z"
+    description: Kubernetes operator that syncs Ingress hostnames to OPNsense Unbound
+      DNS host overrides
+    digest: b0e80689c2210ea393da1501373381d33cb871d7310506371a1703c3d7d6b184
+    keywords:
+    - opnsense
+    - unbound
+    - dns
+    - ingress
+    - operator
+    - networking
+    maintainers:
+    - name: singularcurio
+      url: https://github.com/singularcurio
+    name: opnsense-ingress-operator
+    sources:
+    - https://github.com/singularcurio/opnsense-ingress-operator
+    type: application
+    urls:
+    - https://github.com/singularcurio/helm-charts/releases/download/opnsense-ingress-operator-0.1.4/opnsense-ingress-operator-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: v0.1.2
     created: "2026-03-28T04:14:25.012608721Z"
     description: Kubernetes operator that syncs Ingress hostnames to OPNsense Unbound
       DNS host overrides
@@ -134,4 +157,4 @@ entries:
     urls:
     - https://github.com/singularcurio/helm-charts/releases/download/opnsense-mcp-0.1.1/opnsense-mcp-0.1.1.tgz
     version: 0.1.1
-generated: "2026-03-28T04:14:25.012626637Z"
+generated: "2026-03-28T05:27:05.278844163Z"
