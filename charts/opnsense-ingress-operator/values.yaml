@@ -34,6 +34,14 @@ operator:
   # remove any orphaned overrides left behind by operator downtime.
   reconcileInterval: 300
 
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  capabilities:
+    drop: ["ALL"]
+
 resources:
   requests:
     cpu: 50m
